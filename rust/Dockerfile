@@ -20,4 +20,8 @@ COPY ./src ./src
 RUN rm ./target/release/deps/holodeck*
 RUN cargo install --path .
 
+RUN useradd -u 1000 vscode
+RUN chown -R 1000:1000 *
+USER vscode
+
 CMD ["holodeck"]
