@@ -6,7 +6,7 @@ services:
     # volumes:
     #   - ./web:/usr/src/app
     ports:
-      - "3000:3000"
+      - "3030:3030"
   vscode:
     environment:
         APP_PORT: '8080'
