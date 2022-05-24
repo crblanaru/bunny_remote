@@ -7,7 +7,7 @@ WORKDIR /holodeck
 
 # 2. Copy our manifests
 #COPY ./Cargo.lock ./Cargo.lock
-COPY ./Cargo.toml /app/holodeck/Cargo.toml
+COPY ./Cargo.toml ./Cargo.toml
 
 # 3. Build only the dependencies to cache them
 RUN cargo build --release
@@ -21,7 +21,7 @@ RUN rm ./target/release/deps/holodeck*
 RUN cargo install --path .
 
 RUN useradd -u 1000 vscode
-RUN chown -R 1000:1000 *
+RUN chown -R 1000:1000 /holodeck
 USER vscode
 
 CMD ["holodeck"]
