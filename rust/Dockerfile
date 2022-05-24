@@ -2,6 +2,19 @@
 FROM rust:1.51
 
 # 1. Create a new empty shell project
+RUN addgroup \
+    --gid 1000 \
+    docker
+
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --ingroup docker \
+    --no-create-home \
+    --uid 1000 \
+    docker
+
 RUN USER=root cargo new --bin app/holodeck
 WORKDIR /app/holodeck
 
@@ -20,8 +33,7 @@ COPY ./src ./src
 RUN rm ./target/release/deps/holodeck*
 RUN cargo install --path .
 
-RUN useradd -u 1000 vscode
-RUN chown -R 1000:1000 /app/holodeck
-USER vscode
+RUN chown -R 1000:1000 /app
+USER docker
 
-CMD ["holodeck"]
+CMD ["/app/holodeck"]
