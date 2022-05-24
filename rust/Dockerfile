@@ -33,6 +33,6 @@ COPY ./src ./src
 RUN rm ./target/release/deps/holodeck*
 RUN cargo install --path .
 
-RUN chown -R 1000:1000 /holodeck
+RUN chown -R 1000:0 /holodeck
 
 CMD ["holodeck"]
