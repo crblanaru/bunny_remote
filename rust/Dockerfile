@@ -2,26 +2,26 @@
 FROM rust:1.51
 
 # 1. Create a new empty shell project
-RUN USER=root cargo new --bin app/holodeck
+RUN addgroup \
+    --gid 1000 \
+    docker
+
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --ingroup docker \
+    --no-create-home \
+    --uid 1000 \
+    docker
+
+
 WORKDIR /app/holodeck
 
-# 2. Copy our manifests
-#COPY ./Cargo.lock ./Cargo.lock
-COPY ./Cargo.toml ./Cargo.toml
+RUN echo "test" > file1
+RUN echo "test" > file2
 
-# 3. Build only the dependencies to cache them
-RUN cargo build --release
-RUN rm src/*.rs
+RUN chown -R 1000:1000 /app
+USER docker
 
-# 4. Now that the dependency is built, copy your source code
-COPY ./src ./src
-
-# 5. Build for release.
-RUN rm ./target/release/deps/holodeck*
-RUN cargo install --path .
-
-RUN useradd -u 1000 vscode
-RUN chown -R 1000:1000 /app/holodeck
-USER vscode
-
-CMD ["holodeck"]
+CMD ["sleep", "1000"]
