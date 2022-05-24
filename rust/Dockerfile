@@ -7,7 +7,7 @@ WORKDIR /app/holodeck
 
 # 2. Copy our manifests
 #COPY ./Cargo.lock ./Cargo.lock
-COPY ./Cargo.toml ./Cargo.toml
+COPY ./Cargo.toml /app/holodeck/Cargo.toml
 
 # 3. Build only the dependencies to cache them
 RUN cargo build --release
