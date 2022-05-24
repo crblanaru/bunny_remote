@@ -3,7 +3,7 @@ FROM rust:1.51
 
 # 1. Create a new empty shell project
 RUN USER=root cargo new --bin holodeck
-WORKDIR /app/holodeck
+WORKDIR /holodeck
 
 # 2. Copy our manifests
 #COPY ./Cargo.lock ./Cargo.lock
@@ -21,7 +21,7 @@ RUN rm ./target/release/deps/holodeck*
 RUN cargo install --path .
 
 RUN useradd -u 1000 vscode
-RUN chown -R 1000:1000 /app/holodeck
+RUN chown -R 1000:1000 *
 USER vscode
 
 CMD ["holodeck"]
